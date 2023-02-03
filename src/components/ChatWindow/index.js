@@ -11,17 +11,42 @@ import SendIcon from "@mui/icons-material/Send";
 import MicIcon from "@mui/icons-material/Mic";
 
 export default function CharWindow() {
+  let recognition = null;
+  let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (SpeechRecognition !== undefined) {
+    recognition = new SpeechRecognition();
+  }
+
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [text, setText] = useState("");
+  const [listening, setListening] = useState(false);
+
   const handleEmojiClick = (e, emojiObject) => {
     setText(text + e.emoji);
   };
+
   const handleOpenEmoji = () => {
     setEmojiOpen(true);
   };
   const handleCloseEmoji = () => {
     setEmojiOpen(false);
   };
+  const handleMicClick = () => {
+    if (recognition !== null) {
+      recognition.onstart = () => {
+        setListening(true);
+      };
+      recognition.onend = () => {
+        setListening(false);
+      };
+      recognition.onresult = (e) => {
+        setText(e.results[0][0].transcript);
+      };
+      recognition.start();
+    }
+  };
+  const handleSendClick = () => {};
 
   return (
     <div className="chat-window">
@@ -59,11 +84,17 @@ export default function CharWindow() {
       </div>
       <div className="chat-window-footer">
         <div className="chat-window-pre">
-            <div className="chat-window-btn" onClick={handleCloseEmoji} style={{width: emojiOpen?40:0}}>
+          <div
+            className="chat-window-btn"
+            onClick={handleCloseEmoji}
+            style={{ width: emojiOpen ? 40 : 0 }}
+          >
             <CloseIcon style={{ color: "#919191" }} />
           </div>
           <div className="chat-window-btn" onClick={handleOpenEmoji}>
-            <InsertEmoticonIcon style={{ color: emojiOpen?"#009688":"#919191" }} />
+            <InsertEmoticonIcon
+              style={{ color: emojiOpen ? "#009688" : "#919191" }}
+            />
           </div>
         </div>
 
@@ -78,9 +109,20 @@ export default function CharWindow() {
         </div>
 
         <div className="chat-window-pos">
-          <div className="chat-window-btn">
-            <SendIcon style={{ color: "#919191" }} />
-          </div>
+          {text === "" && (
+            <div className="chat-window-btn" onClick={handleMicClick}>
+              <MicIcon style={{ color: listening ? "#126ece" : "#919191" }} />
+            </div>
+          )}
+
+          {text !== "" && (
+            <div className="chat-window-btn">
+              <SendIcon
+                style={{ color: "#919191" }}
+                onClick={handleSendClick}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
