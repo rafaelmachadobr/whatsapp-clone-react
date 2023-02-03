@@ -1,11 +1,12 @@
 import React from "react";
 import "./styles.css";
+import introImg from "../../imgs/intro-connection.jpg"
 
 export default function ChatIntro() {
   return (
     <div className="chatIntro">
       <img
-        src="https://conteudo.imguol.com.br/c/noticias/2015/01/23/logo-whatsapp-whatsapp-na-web-1422023070243_300x300.jpg"
+        src={introImg}
         alt=""
       />
       <h1>Mantenha seu celular conectado</h1>

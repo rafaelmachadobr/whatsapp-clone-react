@@ -45,6 +45,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: hidden;
+  transition: all ease 0.3s;
 }
 
 .chat-window-body {
@@ -53,7 +55,7 @@
   background-color: #e5ddd5;
   background-size: cover;
   background-position: center;
-  background-image: url("https://neuroup.com.br/wp-content/uploads/2020/04/fundo-whatsapp-2.png");
+  background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
 }
 
 .chat-window-footer {
@@ -86,4 +88,19 @@
 .chat-window-pos {
   display: flex;
   margin: 0 15px;
+}
+
+.chat-window-emoji-area {
+    height: 200px;
+    overflow-y: hidden;
+    transition: all ease 0.3s;
+}
+
+aside.EmojiPickerReact.epr-main {
+  width: auto !important;
+  background: none;
+}
+
+.EmojiPickerReact li.epr-emoji-category>.epr-emoji-category-label {
+    background: none !important;
 }
