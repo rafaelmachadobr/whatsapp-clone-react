@@ -12,7 +12,10 @@ import MicIcon from "@mui/icons-material/Mic";
 
 export default function CharWindow() {
   const [emojiOpen, setEmojiOpen] = useState(false);
-  const handleEmojiClick = () => {};
+  const [text, setText] = useState("");
+  const handleEmojiClick = (e, emojiObject) => {
+    setText(text + e.emoji);
+  };
   const handleOpenEmoji = () => {
     setEmojiOpen(true);
   };
@@ -69,6 +72,8 @@ export default function CharWindow() {
             type="text"
             className="chat-window-input"
             placeholder="Digite uma mensagem"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
         </div>
 
