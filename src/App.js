@@ -34,6 +34,11 @@ export default function App() {
     },
   ]);
   const [activeChat, setActiveChat] = useState({});
+  const [user, setUser] = useState({
+    id: 1234,
+    avatar: "https://www.w3schools.com/howto/img_avatar.png",
+    name: "Jorge",
+  });  
 
   return (
     <div className="app-window">
@@ -41,7 +46,7 @@ export default function App() {
         <header>
           <img
             className="header-avatar"
-            src="https://www.w3schools.com/howto/img_avatar.png"
+            src={user.avatar}
             alt="Avatar"
           />
           <div className="header-buttons">
@@ -79,7 +84,9 @@ export default function App() {
         </div>
       </div>
       <div className="contentarea">
-        {activeChat.chatId !== undefined && <ChatWindow />}
+        {activeChat.chatId !== undefined && <ChatWindow 
+          user={user}
+        />}
         {activeChat.chatId === undefined && <ChatIntro />}
       </div>
     </div>

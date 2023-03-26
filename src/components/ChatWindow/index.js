@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import "./styles.css";
 
+import MessageItem from "../MessageItem";
+
 import SearchIcon from "@mui/icons-material/Search";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -10,9 +12,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 import MicIcon from "@mui/icons-material/Mic";
 
-export default function CharWindow() {
+export default function CharWindow({ user }) {
   let recognition = null;
-  let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (SpeechRecognition !== undefined) {
     recognition = new SpeechRecognition();
@@ -21,6 +24,11 @@ export default function CharWindow() {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [text, setText] = useState("");
   const [listening, setListening] = useState(false);
+  const [list, setList] = useState([
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 1234, body: "Olá, tudo bem?" },
+  ]);
 
   const handleEmojiClick = (e, emojiObject) => {
     setText(text + e.emoji);
@@ -71,7 +79,11 @@ export default function CharWindow() {
           </div>
         </div>
       </div>
-      <div className="chat-window-body"></div>
+      <div className="chat-window-body">
+        {list.map((item, key) => (
+          <MessageItem key={key} data={item} user={user} />
+        ))}
+      </div>
       <div
         className="chat-window-emoji-area"
         style={{ height: emojiOpen ? "200px" : "0px" }}
