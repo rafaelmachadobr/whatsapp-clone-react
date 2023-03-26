@@ -3,7 +3,7 @@ import "./styles.css";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-export default function NewChat() {
+export default function NewChat({ chatlist, user, show, setShow }) {
   const [list, setList] = useState([
     {
       id: 123,
@@ -27,10 +27,14 @@ export default function NewChat() {
     },
   ]);
 
+  const handleClose = () => {
+    setShow(false);
+  };
+
   return (
-    <div className="newChat">
+    <div className="newChat" style={{ left: show ? 0 : -415 }}>
       <div className="newChat-head">
-        <div className="newChat-backButton">
+        <div onClick={handleClose} className="newChat-backButton">
           <ArrowBackIcon style={{ color: "#fff" }} />
         </div>
         <div className="newChat-headTitle">Nova Conversa</div>
