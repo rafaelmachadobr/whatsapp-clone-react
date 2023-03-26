@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
 import "./styles.css";
 
@@ -13,6 +13,8 @@ import SendIcon from "@mui/icons-material/Send";
 import MicIcon from "@mui/icons-material/Mic";
 
 export default function CharWindow({ user }) {
+  const body = useRef();
+
   let recognition = null;
   let SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -28,7 +30,32 @@ export default function CharWindow({ user }) {
     { author: 123, body: "Olá, tudo bem?" },
     { author: 123, body: "Olá, tudo bem?" },
     { author: 1234, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 1234, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 1234, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 1234, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 1234, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 1234, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 123, body: "Olá, tudo bem?" },
+    { author: 1234, body: "Olá, tudo bem?" },
   ]);
+
+  useEffect(() => {
+    if (body.current.scrollHeight > body.current.offsetHeight) {
+      body.current.scrollTop =
+        body.current.scrollHeight - body.current.offsetHeight;
+    }
+  }, [list]);
 
   const handleEmojiClick = (e, emojiObject) => {
     setText(text + e.emoji);
@@ -79,7 +106,7 @@ export default function CharWindow({ user }) {
           </div>
         </div>
       </div>
-      <div className="chat-window-body">
+      <div ref={body} className="chat-window-body">
         {list.map((item, key) => (
           <MessageItem key={key} data={item} user={user} />
         ))}
