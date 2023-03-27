@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
+import Api from "./Api";
+
 import ChatListItem from "./components/ChatListItem";
 import ChatIntro from "./components/ChatIntro";
 import ChatWindow from "./components/ChatWindow";
 import NewChat from "./components/NewChat";
+import Login from "./components/Login";
 
 import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import ChatIcon from "@mui/icons-material/Chat";
@@ -12,33 +15,12 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
 
 export default function App() {
-  const [chatlist, setChatlist] = useState([
-    {
-      chatId: 1,
-      title: "Jorge",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-    {
-      chatId: 2,
-      title: "Ana",
-      image: "https://www.w3schools.com/howto/img_avatar2.png",
-    },
-    {
-      chatId: 3,
-      title: "Marcela",
-      image: "https://www.w3schools.com/howto/img_avatar2.png",
-    },
-    {
-      chatId: 4,
-      title: "Luis",
-      image: "https://www.w3schools.com/howto/img_avatar.png",
-    },
-  ]);
+  const [chatlist, setChatlist] = useState([]);
   const [activeChat, setActiveChat] = useState({});
   const [user, setUser] = useState({
-    id: 1234,
+    id: "OqOXqdZmrAacIP6Q0E1Z",
+    name: "Rafael",
     avatar: "https://www.w3schools.com/howto/img_avatar.png",
-    name: "Jorge",
   });
 
   const [showNewChat, setShowNewChat] = useState(false);
@@ -46,6 +28,20 @@ export default function App() {
   const handleNewChat = () => {
     setShowNewChat(true);
   };
+
+  const handleLoginData = async (u) => {
+    let newUser = {
+      id: u.uid,
+      name: u.displayName,
+      avatar: u.photoURL,
+    };
+    await Api.addUser(newUser);
+    setUser(newUser);
+  };
+
+  if (user === null) {
+    return <Login onReceive={handleLoginData} />;
+  }
 
   return (
     <div className="app-window">
