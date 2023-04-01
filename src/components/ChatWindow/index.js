@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
 import "./styles.css";
 
+import Api from "../../Api";
+
 import MessageItem from "../MessageItem";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -12,7 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 import MicIcon from "@mui/icons-material/Mic";
 
-export default function CharWindow({ user }) {
+export default function CharWindow({ user, data }) {
   const body = useRef();
 
   let recognition = null;
@@ -26,29 +28,13 @@ export default function CharWindow({ user }) {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [text, setText] = useState("");
   const [listening, setListening] = useState(false);
-  const [list, setList] = useState([
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 1234, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 1234, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 1234, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 1234, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 1234, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 1234, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 123, body: "Olá, tudo bem?" },
-    { author: 1234, body: "Olá, tudo bem?" },
-  ]);
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    setList([]);
+    let unsub = Api.onChatContent(data.chatId, setList);
+    return unsub;
+  }, [data.chatId]);   
 
   useEffect(() => {
     if (body.current.scrollHeight > body.current.offsetHeight) {
@@ -87,12 +73,8 @@ export default function CharWindow({ user }) {
     <div className="chat-window">
       <div className="chat-window-header">
         <div className="chat-window-header-info">
-          <img
-            className="chat-window-avatar"
-            src="https://www.w3schools.com/howto/img_avatar.png"
-            alt="Avatar"
-          />
-          <div className="chat-window-name">Nome do contato</div>
+          <img className="chat-window-avatar" src={data.image} alt="Avatar" />
+          <div className="chat-window-name">{data.title}</div>
         </div>
         <div className="chat-window-header-buttons">
           <div className="chat-window-btn">

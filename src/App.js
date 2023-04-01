@@ -96,7 +96,7 @@ export default function App() {
         </div>
       </div>
       <div className="contentarea">
-        {activeChat.chatId !== undefined && <ChatWindow user={user} />}
+        {activeChat.chatId !== undefined && <ChatWindow user={user} data={activeChat} />}
         {activeChat.chatId === undefined && <ChatIntro />}
       </div>
     </div>
