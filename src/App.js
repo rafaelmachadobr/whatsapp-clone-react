@@ -25,6 +25,13 @@ export default function App() {
 
   const [showNewChat, setShowNewChat] = useState(false);
 
+  useEffect(() => {
+    if (user !== null) {
+      let unsub = Api.onChatList(user.id, setChatlist);
+      return unsub;
+    }
+  }, [user]);
+
   const handleNewChat = () => {
     setShowNewChat(true);
   };
