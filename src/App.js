@@ -17,11 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 export default function App() {
   const [chatlist, setChatlist] = useState([]);
   const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] = useState({
-    id: "OqOXqdZmrAacIP6Q0E1Z",
-    name: "Rafael",
-    avatar: "https://www.w3schools.com/howto/img_avatar.png",
-  });
+  const [user, setUser] = useState(null);
 
   const [showNewChat, setShowNewChat] = useState(false);
 
@@ -96,7 +92,9 @@ export default function App() {
         </div>
       </div>
       <div className="contentarea">
-        {activeChat.chatId !== undefined && <ChatWindow user={user} data={activeChat} />}
+        {activeChat.chatId !== undefined && (
+          <ChatWindow user={user} data={activeChat} />
+        )}
         {activeChat.chatId === undefined && <ChatIntro />}
       </div>
     </div>
